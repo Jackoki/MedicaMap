@@ -1,0 +1,36 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build
+bin/
+obj/
+
+# Logs
+*.log
+
+# Testes
+TestResults/
+
+# Arquivos de publicação
+publish/
+
+# Dados da BNAFAR
+data/
+dados/
+
+# Arquivos grandes da BNAFAR
+*.csv
+*.zip
+
+# JSONs de dados baixados
+data/**/*.json
+dados/**/*.json
+
+# Configurações locais
+appsettings.Development.json
+
+# Docker
+*.env
+.env
