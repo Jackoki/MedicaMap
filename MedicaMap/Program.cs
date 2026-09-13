@@ -1,4 +1,5 @@
 using MedicaMap.Data;
+using MedicaMap.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,11 @@ builder.Services.AddDbContext<MedicaMapContext>(options =>
         connectionString,
         ServerVersion.AutoDetect(connectionString)
     ));
+
+builder.Services.AddScoped<MunicipalityService>();
+builder.Services.AddScoped<EstablishmentService>();
+builder.Services.AddScoped<MedicationService>();
+builder.Services.AddScoped<StockService>();
 
 builder.Services.AddControllers();
 

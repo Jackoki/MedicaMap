@@ -1,0 +1,25 @@
+﻿using MedicaMap.Data;
+using MedicaMap.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace MedicaMap.Services;
+
+public class MunicipalityService
+{
+    private readonly MedicaMapContext _context;
+
+    public MunicipalityService(MedicaMapContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<List<Municipality>> GetAllAsync()
+    {
+        return await _context.Municipalities.AsNoTracking().OrderBy(m => m.Name).ToListAsync();
+    }
+
+    public async Task<Municipality?> GetByIdAsync(int id)
+    {
+        return await _context.Municipalities.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+    }
+}
