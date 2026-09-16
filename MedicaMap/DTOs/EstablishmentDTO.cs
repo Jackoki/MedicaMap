@@ -1,6 +1,6 @@
 ﻿namespace MedicaMap.DTOs
 {
-    public class EstablishmentDto
+    public class EstablishmentDTO
     {
         public int Id { get; set; }
         public string CnesCode { get; set; } = string.Empty;
