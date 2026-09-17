@@ -33,7 +33,7 @@ public class EstablishmentController : ControllerBase
             Email = e.Email,
             MunicipalityId = e.MunicipalityId,
             MunicipalityName = e.Municipality?.Name,
-            MunicipalityState = e.Municipality?.State
+            MunicipalityState = e.Municipality?.State?.Uf
         }).ToList();
 
         return Ok(result);
@@ -60,7 +60,7 @@ public class EstablishmentController : ControllerBase
             Email = establishment.Email,
             MunicipalityId = establishment.MunicipalityId,
             MunicipalityName = establishment.Municipality?.Name,
-            MunicipalityState = establishment.Municipality?.State
+            MunicipalityState = establishment.Municipality?.State?.Uf
         };
 
         return Ok(result);
@@ -86,7 +86,7 @@ public class EstablishmentController : ControllerBase
             Email = e.Email,
             MunicipalityId = e.MunicipalityId,
             MunicipalityName = e.Municipality?.Name,
-            MunicipalityState = e.Municipality?.State
+            MunicipalityState = e.Municipality?.State?.Uf
         }).ToList();
 
         return Ok(result);

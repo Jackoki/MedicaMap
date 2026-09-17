@@ -17,6 +17,7 @@ builder.Services.AddScoped<MunicipalityService>();
 builder.Services.AddScoped<EstablishmentService>();
 builder.Services.AddScoped<MedicationService>();
 builder.Services.AddScoped<StockService>();
+builder.Services.AddScoped<StateService>();
 
 builder.Services.AddControllers();
 

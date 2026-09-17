@@ -32,4 +32,9 @@ public class StockService
     {
         return await _context.Stocks.AsNoTracking().Include(s => s.Establishment).Include(s => s.Medication).Where(s => s.MedicationId == medicationId).ToListAsync();
     }
+
+    public async Task<List<Stock>> GetByEstablishmentAsync(int establishmentId)
+    {
+        return await _context.Stocks.AsNoTracking().Include(s => s.Establishment).Include(s => s.Medication).Where(s => s.EstablishmentId == establishmentId).OrderBy(s => s.Medication.Description).ToListAsync();
+    }
 }

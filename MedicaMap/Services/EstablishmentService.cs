@@ -15,16 +15,16 @@ public class EstablishmentService
 
     public async Task<List<Establishment>> GetAllAsync()
     {
-        return await _context.Establishments.AsNoTracking().Include(e => e.Municipality).OrderBy(e => e.TradeName).ToListAsync();
+        return await _context.Establishments.AsNoTracking().Include(e => e.Municipality).ThenInclude(m => m.State).OrderBy(e => e.TradeName).ToListAsync();
     }
 
     public async Task<Establishment?> GetByIdAsync(int id)
     {
-        return await _context.Establishments.AsNoTracking().Include(e => e.Municipality).FirstOrDefaultAsync(e => e.Id == id);
+        return await _context.Establishments.AsNoTracking().Include(e => e.Municipality).ThenInclude(m => m.State).FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task<List<Establishment>> GetByMunicipalityAsync(int municipalityId)
     {
-        return await _context.Establishments.AsNoTracking().Where(e => e.MunicipalityId == municipalityId).OrderBy(e => e.TradeName).ToListAsync();
+        return await _context.Establishments.AsNoTracking().Include(e => e.Municipality).ThenInclude(m => m.State).Where(e => e.MunicipalityId == municipalityId).OrderBy(e => e.TradeName).ToListAsync();
     }
 }

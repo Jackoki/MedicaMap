@@ -1,7 +1,8 @@
 INSERT INTO Municipalities
-    (IbgeCode, Name, State)
+    (IbgeCode, Name, StateId)
 SELECT DISTINCT
-    co_municipio_ibge,
-    no_municipio,
-    sg_uf
-FROM BnafarRaw;
+    r.co_municipio_ibge,
+    r.no_municipio,
+    s.Id
+FROM BnafarRaw r
+INNER JOIN States s ON s.Uf = r.sg_uf;

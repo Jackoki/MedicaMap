@@ -25,7 +25,9 @@ public class MunicipalityController : ControllerBase
             Id = m.Id,
             IbgeCode = m.IbgeCode,
             Name = m.Name,
-            State = m.State
+            StateId = m.StateId,
+            StateUf = m.State.Uf,
+            StateName = m.State.Name
         }).ToList();
 
         return Ok(result);
@@ -44,8 +46,26 @@ public class MunicipalityController : ControllerBase
             Id = municipality.Id,
             IbgeCode = municipality.IbgeCode,
             Name = municipality.Name,
-            State = municipality.State
+            StateId = municipality.StateId,
+            StateUf = municipality.State.Uf,
+            StateName = municipality.State.Name
         };
+
+        return Ok(result);
+    }
+
+    [HttpGet("state/{stateId:int}")]
+    public async Task<ActionResult<List<MunicipalityDTO>>> GetByState(int stateId)
+    {
+        var municipalities = await _municipalityService.GetByStateAsync(stateId);
+
+        var result = municipalities.Select(m => new MunicipalityDTO
+        {
+            Id = m.Id,
+            IbgeCode = m.IbgeCode,
+            Name = m.Name,
+            StateId = m.StateId
+        }).ToList();
 
         return Ok(result);
     }
