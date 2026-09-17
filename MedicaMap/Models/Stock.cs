@@ -9,6 +9,5 @@
         public Medication Medication { get; set; } = null!;
         public DateTime StockDate { get; set; }
         public decimal Quantity { get; set; }
-        public ICollection<StockLot> StockLots { get; set; } = new List<StockLot>();
     }
 }

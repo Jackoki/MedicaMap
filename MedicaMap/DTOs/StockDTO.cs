@@ -13,7 +13,5 @@
 
         public DateTime StockDate { get; set; }
         public decimal Quantity { get; set; }
-
-        public List<StockLotDTO> Lots { get; set; } = new();
     }
 }
