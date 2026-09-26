@@ -18,6 +18,16 @@ builder.Services.AddScoped<EstablishmentService>();
 builder.Services.AddScoped<MedicationService>();
 builder.Services.AddScoped<StockService>();
 builder.Services.AddScoped<StateService>();
+builder.Services.AddScoped<BnafarImportService>();
+
+builder.Services.AddHttpClient<BnafarApiService>(client =>
+{
+    client.BaseAddress = new Uri(
+        "https://apidadosabertos.saude.gov.br/"
+    );
+});
+
+builder.Services.AddScoped<BnafarApiImportService>();
 
 builder.Services.AddControllers();
 

@@ -1,4 +1,5 @@
 ﻿namespace MedicaMap.Services;
+
 using System.Net.Http.Json;
 using MedicaMap.DTOs;
 using MedicaMap.Models;
@@ -6,33 +7,53 @@ using MedicaMap.Models;
 public class BnafarApiService
 {
     private readonly HttpClient _httpClient;
-
     public BnafarApiService(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
 
-    public async Task<List<BNAFAREstoqueDTO>> ObterEstoquesAsync()
+    public async IAsyncEnumerable<BNAFAREstoqueDTO> ObterEstoquesAsync()
     {
-        var todos = new List<BNAFAREstoqueDTO>();
         const int limit = 100;
         int offset = 0;
 
         while (true)
         {
-            var url = $"daf/estoque-medicamentos-bnafar-horus?limit={limit}&offset={offset}";
+            var url = $"daf/estoque-medicamentos-bnafar-horus" + $"?limit={limit}&offset={offset}";
+
             var resposta = await _httpClient.GetFromJsonAsync<BNAFARResponse>(url);
 
             if (resposta == null || resposta.Parametros.Count == 0)
-                break;
+            {
+                yield break;
+            }
 
-            todos.AddRange(resposta.Parametros);
+            foreach (var estoque in resposta.Parametros)
+            {
+                yield return estoque;
+            }
 
             if (resposta.Parametros.Count < limit)
-                break;
+            {
+                yield break;
+            }
 
             offset += limit;
         }
-        return todos;
+    }
+
+    public async Task<List<BNAFAREstoqueDTO>> ObterPrimeirosRegistrosAsync()
+    {
+        const int limit = 100;
+        const int offset = 0;
+
+        var url =
+            $"daf/estoque-medicamentos-bnafar-horus" +
+            $"?limit={limit}&offset={offset}";
+
+        var resposta =
+            await _httpClient.GetFromJsonAsync<BNAFARResponse>(url);
+
+        return resposta?.Parametros ?? new List<BNAFAREstoqueDTO>();
     }
 }
