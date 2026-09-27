@@ -27,8 +27,6 @@ builder.Services.AddHttpClient<BnafarApiService>(client =>
     );
 });
 
-builder.Services.AddScoped<BnafarApiImportService>();
-
 builder.Services.AddControllers();
 
 var app = builder.Build();

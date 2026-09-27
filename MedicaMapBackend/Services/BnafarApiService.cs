@@ -41,19 +41,4 @@ public class BnafarApiService
             offset += limit;
         }
     }
-
-    public async Task<List<BNAFAREstoqueDTO>> ObterPrimeirosRegistrosAsync()
-    {
-        const int limit = 100;
-        const int offset = 0;
-
-        var url =
-            $"daf/estoque-medicamentos-bnafar-horus" +
-            $"?limit={limit}&offset={offset}";
-
-        var resposta =
-            await _httpClient.GetFromJsonAsync<BNAFARResponse>(url);
-
-        return resposta?.Parametros ?? new List<BNAFAREstoqueDTO>();
-    }
 }
