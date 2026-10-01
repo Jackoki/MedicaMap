@@ -1,0 +1,17 @@
+.pagina {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.opcoes {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 16px;
+  cursor: pointer;
+}
