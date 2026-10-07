@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { BnafarService } from '../../services/bnafar.service';
+import { ConfiguracaoService } from '../../services/configuracao';
 
 @Component({
   selector: 'app-banco-local',
@@ -10,9 +13,12 @@ import { BnafarService } from '../../services/bnafar.service';
 
 export class BancoLocal {
   nomeArquivo: string = '';
+  importando = false;
+  mensagem = '';
+  erro = '';
   arquivo: File | null = null;
 
-  constructor(private bnafarService: BnafarService) {}
+  constructor(private bnafarService: BnafarService, private configuracaoService: ConfiguracaoService, private router: Router, private location: Location) {}
 
   arquivoSelecionado(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -30,15 +36,22 @@ export class BancoLocal {
       return;
     }
 
-    this.bnafarService.importarArquivo(this.arquivo)
-      .subscribe({
-        next: resposta => {
-          console.log('Importação:', resposta);
-        },
-        error: erro => {
-          console.error('Erro ao enviar arquivo:', erro);
-        }
-      });
+    this.importando = true;
+    this.mensagem = '';
+    this.erro = '';
+
+    this.bnafarService.importarArquivo(this.arquivo).subscribe({
+      next: (resposta) => {
+        this.importando = false;
+        this.mensagem = resposta.mensagem;
+      },
+
+      error: (erro) => {
+        this.importando = false;
+        this.erro = 'Ocorreu um erro durante a importação do arquivo.';
+        console.error(erro);
+      }
+    });
   }
 
   instalarBanco(): void {
@@ -47,5 +60,14 @@ export class BancoLocal {
 
   removerBanco(): void {
     console.log('Remover banco de dados');
+  }
+
+  utilizarBancoLocal(): void {
+    this.configuracaoService.definirFonte('local');
+    this.router.navigate(['/inicio']);
+  }
+
+  voltar(): void {
+    this.location.back();
   }
 }

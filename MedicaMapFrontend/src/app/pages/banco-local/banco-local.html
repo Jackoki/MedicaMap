@@ -8,7 +8,6 @@
 
   <input #arquivoInput type="file" accept=".csv" hidden (change)="arquivoSelecionado($event)">
   <div class="opcoes">
-
     <button (click)="arquivoInput.click()">
       Importar planilha
     </button>
@@ -21,16 +20,35 @@
       Remover banco de dados
     </button>
 
+    <button (click)="utilizarBancoLocal()">
+      Setar Consultas para Banco Local
+    </button>
   </div>
 
-  @if (nomeArquivo) {
-    <p>
-      Arquivo selecionado:
-      <strong>{{ nomeArquivo }}</strong>
-    </p>
-
+  @if (nomeArquivo && !importando) {
+    <p>Arquivo selecionado: <strong>{{ nomeArquivo }}</strong> </p>
     <button (click)="importarPlanilha()">
       Importar arquivo
     </button>
   }
+
+  @if (importando) {
+    <div class="status-importacao">
+      <div class="spinner"></div>
+      <h2>Importando dados...</h2>
+      <p>O arquivo está sendo processado.</p>
+      <p>Isso pode levar alguns minutos. Não feche esta página.</p>
+      <strong>{{ nomeArquivo }}</strong>
+    </div>
+  }
+
+  @if (mensagem) {
+    <div class="mensagem sucesso">{{ mensagem }}</div>
+  }
+
+  @if (erro) {
+    <div class="mensagem erro">{{ erro }}</div>
+  }
+  
+  <button class="botao-voltar" (click)="voltar()">Voltar</button>
 </div>
