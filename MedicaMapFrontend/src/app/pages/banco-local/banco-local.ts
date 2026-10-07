@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BnafarService } from '../../services/bnafar.service';
 
 @Component({
   selector: 'app-banco-local',
@@ -8,8 +9,36 @@ import { Component } from '@angular/core';
 })
 
 export class BancoLocal {
+  nomeArquivo: string = '';
+  arquivo: File | null = null;
+
+  constructor(private bnafarService: BnafarService) {}
+
+  arquivoSelecionado(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    this.arquivo = input.files[0];
+    this.nomeArquivo = this.arquivo.name;
+  }
+
   importarPlanilha(): void {
-    console.log('Importar planilha');
+    if (!this.arquivo) {
+      return;
+    }
+
+    this.bnafarService.importarArquivo(this.arquivo)
+      .subscribe({
+        next: resposta => {
+          console.log('Importação:', resposta);
+        },
+        error: erro => {
+          console.error('Erro ao enviar arquivo:', erro);
+        }
+      });
   }
 
   instalarBanco(): void {

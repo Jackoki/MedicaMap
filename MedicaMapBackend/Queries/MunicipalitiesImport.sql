@@ -1,4 +1,4 @@
-INSERT INTO Municipalities
+INSERT IGNORE INTO Municipalities
     (IbgeCode, Name, StateId)
 SELECT DISTINCT
     r.co_municipio_ibge,

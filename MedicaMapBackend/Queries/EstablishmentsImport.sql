@@ -1,4 +1,4 @@
-INSERT INTO Establishments
+INSERT IGNORE INTO Establishments
 (
     CnesCode,
     TradeName,

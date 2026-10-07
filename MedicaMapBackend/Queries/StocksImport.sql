@@ -1,4 +1,4 @@
-INSERT INTO Stocks
+INSERT IGNORE INTO Stocks
 (
     EstablishmentId,
     MedicationId,
@@ -40,8 +40,3 @@ GROUP BY
     e.Id,
     m.Id,
     STR_TO_DATE(r.dt_posicao_estoque, '%Y/%m/%d');
-
-
-ALTER TABLE Stocks
-ADD CONSTRAINT UQ_Stocks_Establishment_Medication_Date
-UNIQUE (EstablishmentId, MedicationId, StockDate);

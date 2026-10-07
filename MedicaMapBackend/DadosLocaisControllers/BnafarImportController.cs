@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MedicaMap.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/bnafar")]
 public class BnafarImportController : ControllerBase
 {
     private readonly BnafarImportService _importService;
@@ -14,8 +14,8 @@ public class BnafarImportController : ControllerBase
         _importService = importService;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Importar(IFormFile arquivo)
+    [HttpPost("importar")]
+    public async Task<IActionResult> Importar([FromForm] IFormFile arquivo)
     {
         if (arquivo == null || arquivo.Length == 0)
         {

@@ -1,6 +1,8 @@
 USE medicamap;
 
-CREATE TABLE States (
+SET GLOBAL local_infile = 1;
+
+CREATE TABLE IF NOT EXISTS States (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     IbgeCode VARCHAR(2) NOT NULL,
     Uf VARCHAR(2) NOT NULL,
@@ -10,7 +12,7 @@ CREATE TABLE States (
     UNIQUE (Uf)
 );
 
-INSERT INTO States (IbgeCode, Uf, Name) VALUES
+INSERT IGNORE INTO States (IbgeCode, Uf, Name) VALUES
 ('11', 'RO', 'Rondônia'),
 ('12', 'AC', 'Acre'),
 ('13', 'AM', 'Amazonas'),

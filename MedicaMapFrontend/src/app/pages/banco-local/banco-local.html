@@ -6,9 +6,10 @@
     Gerencie os dados utilizados pelo MedicaMap.
   </p>
 
+  <input #arquivoInput type="file" accept=".csv" hidden (change)="arquivoSelecionado($event)">
   <div class="opcoes">
 
-    <button (click)="importarPlanilha()">
+    <button (click)="arquivoInput.click()">
       Importar planilha
     </button>
 
@@ -22,4 +23,14 @@
 
   </div>
 
+  @if (nomeArquivo) {
+    <p>
+      Arquivo selecionado:
+      <strong>{{ nomeArquivo }}</strong>
+    </p>
+
+    <button (click)="importarPlanilha()">
+      Importar arquivo
+    </button>
+  }
 </div>

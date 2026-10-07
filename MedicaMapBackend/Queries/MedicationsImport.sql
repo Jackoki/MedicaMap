@@ -1,4 +1,4 @@
-INSERT INTO Medications
+INSERT IGNORE INTO Medications
 (
     CatmatCode,
     Description,

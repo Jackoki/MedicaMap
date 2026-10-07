@@ -32,10 +32,31 @@ builder.Services.AddHttpClient<BnafarApiService>(client =>
     client.BaseAddress = new Uri("https://apidadosabertos.saude.gov.br/");
 });
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Angular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = long.MaxValue;
+});
+
+builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = long.MaxValue;
+});
+
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+app.UseCors("Angular");
 app.MapControllers();
 app.Run();
