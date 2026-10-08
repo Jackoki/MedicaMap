@@ -55,11 +55,41 @@ export class BancoLocal {
   }
 
   instalarBanco(): void {
-    console.log('Instalar banco de dados');
+    this.mensagem = '';
+    this.erro = '';
+
+    this.bnafarService.instalarBanco().subscribe({
+      next: (resposta) => {
+        this.mensagem = resposta.mensagem;
+      },
+
+      error: (erro) => {
+        this.erro = 'Ocorreu um erro ao instalar o banco de dados.';
+        console.error(erro);
+      }
+    });
   }
 
   removerBanco(): void {
-    console.log('Remover banco de dados');
+    const confirmar = confirm('Tem certeza que deseja remover o banco de dados? Todos os dados serão apagados.');
+
+    if (!confirmar) {
+      return;
+    }
+
+    this.mensagem = '';
+    this.erro = '';
+
+    this.bnafarService.removerBanco().subscribe({
+      next: (resposta) => {
+        this.mensagem = resposta.mensagem;
+      },
+
+      error: (erro) => {
+        this.erro = 'Ocorreu um erro ao remover o banco de dados.';
+        console.error(erro);
+      }
+    });
   }
 
   utilizarBancoLocal(): void {

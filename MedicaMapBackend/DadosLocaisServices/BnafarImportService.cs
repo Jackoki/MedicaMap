@@ -15,6 +15,17 @@ public class BnafarImportService
         _environment = environment;
     }
 
+    public async Task InstalarBancoAsync()
+    {
+        await ExecutarSqlAsync("BnafarRawCreate.sql");
+        await ExecutarSqlAsync("TablesCreate.sql");
+    }
+
+    public async Task RemoverBancoAsync()
+    {
+        await ExecutarSqlAsync("DatabaseDrop.sql");
+    }
+
     public async Task ImportarAsync(string caminhoArquivo)
     {
         await ExecutarSqlAsync("BnafarRawCreate.sql");

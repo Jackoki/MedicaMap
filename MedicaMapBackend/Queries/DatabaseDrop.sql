@@ -1,0 +1,13 @@
+USE medicamap;
+
+DROP TABLE IF EXISTS Stocks;
+
+DROP TABLE IF EXISTS Medications;
+
+DROP TABLE IF EXISTS Establishments;
+
+DROP TABLE IF EXISTS Municipalities;
+
+DROP TABLE IF EXISTS States;
+
+DROP TABLE IF EXISTS BnafarRaw;

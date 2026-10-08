@@ -56,4 +56,26 @@ public class BnafarImportController : ControllerBase
             }
         }
     }
+
+    [HttpPost("instalar")]
+    public async Task<IActionResult> Instalar()
+    {
+        await _importService.InstalarBancoAsync();
+
+        return Ok(new
+        {
+            mensagem = "Banco de dados instalado com sucesso."
+        });
+    }
+
+    [HttpDelete("remover")]
+    public async Task<IActionResult> Remover()
+    {
+        await _importService.RemoverBancoAsync();
+
+        return Ok(new
+        {
+            mensagem = "Banco de dados removido com sucesso."
+        });
+    }
 }
