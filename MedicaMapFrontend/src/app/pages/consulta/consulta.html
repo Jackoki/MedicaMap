@@ -1,1 +1,94 @@
-<p>consulta works!</p>
+
+<div class="pagina-consulta">
+  <header class="cabecalho">
+    <h1>Consulta de medicamentos</h1>
+    <p>Consulte os estoques de medicamentos por localização e estabelecimento de saúde.</p>
+
+    <span class="fonte-dados">
+      Fonte selecionada: {{ fonte === 'api' ? 'API online' : 'Banco local' }}
+    </span>
+  </header>
+
+  <section class="filtros">
+    <div class="campo">
+      <label for="estado">Estado</label>
+      <select id="estado" [(ngModel)]="estadoSelecionado" (ngModelChange)="selecionarEstado()">
+        <option [ngValue]="null">Selecione um estado</option>
+        <option *ngFor="let estado of estados" [ngValue]="estado">
+          {{ estado.nome ?? estado.name ?? estado.uf }}
+        </option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="municipio">Município</label>
+      <select id="municipio" [(ngModel)]="municipioSelecionado" (ngModelChange)="selecionarMunicipio()" [disabled]="!estadoSelecionado">
+        <option [ngValue]="null">Selecione um município</option>
+        <option *ngFor="let municipio of municipios" [ngValue]="municipio">
+          {{ municipio.nome ?? municipio.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="estabelecimento">Estabelecimento de saúde</label>
+      <select id="estabelecimento" [(ngModel)]="estabelecimentoSelecionado" (ngModelChange)="selecionarEstabelecimento()" [disabled]="!municipioSelecionado">
+        <option [ngValue]="null">Selecione um estabelecimento</option>
+        <option *ngFor="let estabelecimento of estabelecimentos" [ngValue]="estabelecimento">
+          {{ estabelecimento.tradeName ?? estabelecimento.nomeFantasia ?? estabelecimento.nome_fantasia ?? estabelecimento.nome }}
+        </option>
+      </select>
+    </div>
+  </section>
+
+  <div class="mensagem carregando" *ngIf="carregando">
+    Carregando dados...
+  </div>
+
+  <div class="mensagem erro" *ngIf="erro">
+    {{ erro }}
+  </div>
+
+  <section class="resultado" *ngIf="estabelecimentoSelecionado && !carregando">
+    <h2>Estoque de medicamentos</h2>
+    <p class="estabelecimento">
+      {{ estabelecimentoSelecionado.tradeName ?? estabelecimentoSelecionado.nomeFantasia ?? estabelecimentoSelecionado.nome_fantasia ?? estabelecimentoSelecionado.nome }}
+    </p>
+    <div *ngIf="estoques.length === 0" class="vazio">
+      Nenhum registro de estoque foi encontrado para esta consulta.
+    </div>
+
+    <div class="tabela-container" *ngIf="estoques.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>Medicamento</th>
+            <th>Código CATMAT</th>
+            <th>Quantidade</th>
+            <th>Data do estoque</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let estoque of estoques">
+            <td>
+              {{ estoque.medicationDescription ?? estoque.produto ?? estoque.descricaoProduto ?? estoque.descricao }}
+            </td>
+
+            <td>
+              {{ estoque.catmatCode ?? estoque.codigoCatmat ?? estoque.codigo_catmat }}
+            </td>
+
+            <td>
+              {{ estoque.quantity ?? estoque.quantidadeEstoque ?? estoque.quantidade_estoque }}
+            </td>
+
+            <td>
+              {{ estoque.stockDate ?? estoque.dataPosicaoEstoque ?? estoque.data_posicao_estoque ?? '—' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,132 @@
+
+.pagina-consulta {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.cabecalho {
+  margin-bottom: 28px;
+}
+
+.cabecalho h1 {
+  margin-bottom: 8px;
+  font-size: 28px;
+}
+
+.cabecalho p {
+  color: #666;
+  margin-bottom: 14px;
+}
+
+.fonte-dados {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background: #edf3f8;
+  color: #234b68;
+  font-size: 14px;
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  font-weight: 600;
+}
+
+.campo select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  background: white;
+  font-size: 15px;
+}
+
+.campo select:disabled {
+  background: #f2f2f2;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.resultado {
+  margin-top: 32px;
+}
+
+.resultado h2 {
+  margin-bottom: 8px;
+}
+
+.estabelecimento {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.tabela-container {
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+th {
+  background: #f5f7f9;
+  font-weight: 600;
+}
+
+.mensagem,
+.vazio {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.carregando {
+  background: #f1f5f9;
+}
+
+.erro {
+  background: #fff0f0;
+  color: #a21d1d;
+}
+
+.vazio {
+  background: #f6f6f6;
+  color: #555;
+}
+
+@media (max-width: 800px) {
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+
+  .pagina-consulta {
+    padding: 24px 16px;
+  }
+}

@@ -24,7 +24,7 @@ builder.Services.AddHttpClient<IBGEAPIService>(client =>
 
 builder.Services.AddHttpClient<CnesApiService>(client =>
 {
-    client.BaseAddress = new Uri("https://apidadosabertos.saude.gov.br/v1/");
+    client.BaseAddress = new Uri("https://apidadosabertos.saude.gov.br/");
 });
 
 builder.Services.AddHttpClient<BnafarApiService>(client =>
