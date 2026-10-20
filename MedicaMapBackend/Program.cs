@@ -1,4 +1,3 @@
-using MedicaMap.APIServices;
 using MedicaMap.DadosLocaisServices;
 using MedicaMap.Data;
 using MedicaMap.Services;
@@ -16,19 +15,12 @@ builder.Services.AddScoped<MedicationService>();
 builder.Services.AddScoped<StockService>();
 builder.Services.AddScoped<StateService>();
 builder.Services.AddScoped<BnafarImportService>();
-builder.Services.AddScoped<EstablishmentAPIService>(); 
 builder.Services.AddSingleton<ImportProgressStore>();
-
-builder.Services.AddHttpClient<IBGEAPIService>(client =>
-{
-    client.BaseAddress = new Uri("https://servicodados.ibge.gov.br/");
-});
 
 builder.Services.AddHttpClient<BnafarAPIService>(client =>
 {
     client.BaseAddress = new Uri("https://apidadosabertos.saude.gov.br/");
 });
-
 
 builder.Services.AddCors(options =>
 {
