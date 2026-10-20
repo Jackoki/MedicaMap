@@ -1,8 +1,10 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ConsultaService } from '../../services/consulta';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-consulta',
@@ -26,7 +28,11 @@ export class Consulta implements OnInit {
   erro = '';
   fonte: 'api' | 'local';
 
-  constructor(private consultaService: ConsultaService) {
+  carregandoEstados = false;
+  carregandoMunicipios = false;
+  carregandoEstabelecimentos = false;
+
+  constructor(private consultaService: ConsultaService, private router: Router, private cdr: ChangeDetectorRef) {
     this.fonte = this.consultaService.obterFonte();
   }
 
@@ -36,14 +42,24 @@ export class Consulta implements OnInit {
 
   carregarEstados(): void {
     this.carregando = true;
+    this.carregandoEstados = true;
     this.erro = '';
 
     this.consultaService.obterEstados().subscribe({
       next: dados => {
         this.estados = dados;
         this.carregando = false;
+        this.carregandoEstados = false;
+
+        this.cdr.detectChanges();
       },
-      error: err => this.tratarErro(err)
+      error: err => {
+        this.carregando = false;
+        this.carregandoEstados = false;
+        this.tratarErro(err);
+
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -58,14 +74,24 @@ export class Consulta implements OnInit {
     if (!this.estadoSelecionado) return;
 
     this.carregando = true;
+    this.carregandoMunicipios = true;
     this.erro = '';
 
-    this.consultaService.obterMunicipios(this.estadoSelecionado).subscribe({
+    this.consultaService.obterMunicipios(this.estadoSelecionado)
+      .pipe(
+        finalize(() => {
+          this.carregando = false;
+          this.carregandoMunicipios = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
         next: dados => {
           this.municipios = dados;
-          this.carregando = false;
         },
-        error: err => this.tratarErro(err)
+        error: err => {
+          this.tratarErro(err);
+        }
       });
   }
 
@@ -77,14 +103,24 @@ export class Consulta implements OnInit {
     if (!this.municipioSelecionado) return;
 
     this.carregando = true;
+    this.carregandoEstabelecimentos = true;
     this.erro = '';
 
-    this.consultaService.obterEstabelecimentos(this.estadoSelecionado, this.municipioSelecionado).subscribe({
+    this.consultaService.obterEstabelecimentos(this.estadoSelecionado, this.municipioSelecionado)
+      .pipe(
+        finalize(() => {
+          this.carregando = false;
+          this.carregandoEstabelecimentos = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
         next: dados => {
           this.estabelecimentos = dados;
-          this.carregando = false;
         },
-        error: err => this.tratarErro(err)
+        error: err => {
+          this.tratarErro(err);
+        }
       });
   }
 
@@ -96,17 +132,29 @@ export class Consulta implements OnInit {
     this.carregando = true;
     this.erro = '';
 
-    this.consultaService.obterEstoques(this.estadoSelecionado, this.municipioSelecionado, this.estabelecimentoSelecionado).subscribe({
+    this.consultaService.obterEstoques(this.estadoSelecionado, this.municipioSelecionado, this.estabelecimentoSelecionado)
+      .pipe(
+        finalize(() => {
+          this.carregando = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
         next: dados => {
           this.estoques = dados;
-          this.carregando = false;
         },
-        error: err => this.tratarErro(err)
+        error: err => {
+          this.tratarErro(err);
+        }
       });
   }
 
   private tratarErro(err: any): void {
     this.erro = 'Não foi possível carregar os dados. Verifique a conexão e tente novamente.';
     this.carregando = false;
+  }
+
+  voltar(): void {
+    this.router.navigate(['/inicio']);
   }
 }
