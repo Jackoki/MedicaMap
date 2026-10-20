@@ -11,10 +11,6 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/inicio/inicio').then(m => m.Inicio)
   },
   {
-    path: 'configuracao',
-    loadComponent: () => import('./pages/configuracao/configuracao').then(m => m.Configuracao)
-  },
-  {
     path: 'banco-local',
     loadComponent: () => import('./pages/banco-local/banco-local').then(m => m.BancoLocal)
   },

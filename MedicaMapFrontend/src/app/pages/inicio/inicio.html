@@ -1,21 +1,69 @@
 <div class="pagina">
+  <header class="cabecalho">
+  </header>
 
-  <h1>MedicaMap</h1>
+  <main class="conteudo">
+    <section class="apresentacao">
+      <h2>MedicaMap</h2>
 
-  <p>
-    Plataforma de consulta de dados de estoque de medicamentos do SUS.
-  </p>
+      <p>
+        Consulte dados de estoques de medicamentos do SUS, estabelecimentos e gerencie os dados utilizados pela plataforma.
+      </p>
+    </section>
 
-  <div class="opcoes">
+    <section class="secao-opcoes">
+      <div class="secao-cabecalho">
+        <div>
+          <h3>O que você deseja fazer?</h3>
+          <p>Selecione uma das opções para continuar.</p>
+        </div>
+      </div>
 
-    <button (click)="visualizarConsulta()">
-      Visualizar consulta
-    </button>
+      <div class="opcoes">
+        <button type="button" class="card-opcao" (click)="visualizarConsulta()">
 
-    <button (click)="configurarInformacoes()">
-      Configurar informações
-    </button>
+          <div class="opcao-icone icone-consulta">
+            <span>⌕</span>
+          </div>
 
-  </div>
+          <div class="opcao-texto">
+            <h4>Visualização de consultas</h4>
+            <p>Consulte informações sobre medicamentos, estabelecimentos de saúde e estoques disponíveis.</p>
+          </div>
 
+          <div class="opcao-rodape">
+            <span>Acessar consultas</span>
+            <span class="seta">→</span>
+          </div>
+        </button>
+
+        <button
+          type="button"
+          class="card-opcao"
+          (click)="configurarInformacoes()">
+
+          <div class="opcao-icone icone-configuracao">
+            <span>⚙</span>
+          </div>
+
+          <div class="opcao-texto">
+            <h4>Configurar informações</h4>
+            <p>
+              Gerencie a fonte de consulta, importe arquivos
+              e administre o banco de dados local.
+            </p>
+          </div>
+
+          <div class="opcao-rodape">
+            <span>Configurar plataforma</span>
+            <span class="seta">→</span>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <footer class="rodape">
+      <span>Consulta de dados de estoque de medicamentos do SUS</span>
+    </footer>
+  </main>
 </div>

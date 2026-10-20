@@ -84,7 +84,7 @@
             </td>
 
             <td>
-              {{ estoque.stockDate ?? estoque.dataPosicaoEstoque ?? estoque.data_posicao_estoque ?? '—' }}
+              {{ estoque.stockDate ? (estoque.stockDate | date:'dd/MM/yyyy') : estoque.dataPosicaoEstoque ? (estoque.dataPosicaoEstoque | date:'dd/MM/yyyy') : estoque.data_posicao_estoque ? (estoque.data_posicao_estoque | date:'dd/MM/yyyy') : '—' }}
             </td>
           </tr>
         </tbody>

@@ -17,6 +17,6 @@ export class Inicio {
   }
 
   configurarInformacoes(): void {
-    this.router.navigate(['/configuracao']);
+    this.router.navigate(['/banco-local']);
   }
 }

@@ -3,11 +3,11 @@ using MedicaMap.Models;
 
 namespace MedicaMap.Services;
 
-public class BnafarApiService
+public class BnafarAPIService
 {
     private readonly HttpClient _httpClient;
 
-    public BnafarApiService(HttpClient httpClient)
+    public BnafarAPIService(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
@@ -52,7 +52,7 @@ public class BnafarApiService
             if (resposta.Parametros.Count < limit)
                 yield break;
 
-            offset += limit;
+            offset++;
         }
     }
 }

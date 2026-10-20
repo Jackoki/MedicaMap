@@ -1,54 +1,196 @@
 <div class="pagina">
+  <header class="cabecalho">
+    <div class="cabecalho-texto">
+      <h1>Configurações do Banco Local</h1>
+    </div>
+  </header>
+    
+  <section class="secao-fonte">
+    <div class="secao-cabecalho">
+      <div>
+        <span class="sobretitulo">FONTE DE DADOS</span>
+        <p>Escolha como o MedicaMap deve obter os dados.</p>
+      </div>
+    </div>
 
-  <h1>Banco Local</h1>
+    <div class="seletor-fonte" role="group" aria-label="Selecionar fonte de dados">
+      <button type="button" class="opcao-fonte" [class.ativa]="fonteSelecionada === 'api'" [attr.aria-pressed]="fonteSelecionada === 'api'" (click)="utilizarApi()" [disabled]="importando || operacaoBancoEmAndamento">
+        <span class="fonte-indicador"></span>
+        <span class="fonte-conteudo">
+          <strong>API Online</strong>
+          <small>Consultar dados das APIs</small>
+        </span>
+        @if (fonteSelecionada === 'api') {
+          <span class="fonte-status">Ativa</span>
+        }
+      </button>
 
-  <p>
-    Gerencie os dados utilizados pelo MedicaMap.
-  </p>
+      <button type="button" class="opcao-fonte" [class.ativa]="fonteSelecionada === 'local'" [attr.aria-pressed]="fonteSelecionada === 'local'" (click)="utilizarBancoLocal()" [disabled]="importando || operacaoBancoEmAndamento">
+        <span class="fonte-indicador"></span>
+        <span class="fonte-conteudo">
+          <strong>Banco local</strong>
+          <small>Consultar dados importados</small>
+        </span>
 
-  <input #arquivoInput type="file" accept=".csv" hidden (change)="arquivoSelecionado($event)">
-  <div class="opcoes">
-    <button (click)="arquivoInput.click()">
-      Importar planilha
-    </button>
+        @if (fonteSelecionada === 'local') {
+          <span class="fonte-status">Ativa</span>
+        }
+      </button>
+    </div>
+  </section>
 
-    <button (click)="instalarBanco()">
-      Instalar banco de dados
-    </button>
 
-    <button (click)="removerBanco()">
-      Remover banco de dados
-    </button>
-
-    <button (click)="utilizarBancoLocal()">
-      Setar Consultas para Banco Local
-    </button>
-  </div>
-
-  @if (nomeArquivo && !importando) {
-    <p>Arquivo selecionado: <strong>{{ nomeArquivo }}</strong> </p>
-    <button (click)="importarPlanilha()">
-      Importar arquivo
-    </button>
-  }
-
-  @if (importando) {
-    <div class="status-importacao">
-      <div class="spinner"></div>
-      <h2>Importando dados...</h2>
-      <p>O arquivo está sendo processado.</p>
-      <p>Isso pode levar alguns minutos. Não feche esta página.</p>
-      <strong>{{ nomeArquivo }}</strong>
+  @if (mensagem) {
+    <div class="alerta alerta-sucesso" role="status">
+      <span class="alerta-icone">✓</span>
+      <p>{{ mensagem }}</p>
     </div>
   }
 
-  @if (mensagem) {
-    <div class="mensagem sucesso">{{ mensagem }}</div>
+  @if (erro) {
+    <div class="alerta alerta-erro" role="alert">
+      <span class="alerta-icone">!</span>
+      <p>{{ erro }}</p>
+    </div>
   }
 
-  @if (erro) {
-    <div class="mensagem erro">{{ erro }}</div>
+  @if (importando) {
+    <section class="painel-progresso">
+      <div class="progresso-cabecalho">
+        <div>
+          <span class="sobretitulo">PROCESSAMENTO EM ANDAMENTO</span>
+          <h2>Importando dados</h2>
+        </div>
+        <span class="indicador-ativo">
+          <span class="ponto-ativo"></span>
+          Em andamento
+        </span>
+      </div>
+
+      <p class="progresso-etapa">{{ etapaImportacao }}</p>
+
+      <div class="barra-progresso" role="progressbar" [attr.aria-valuenow]="percentualImportacao" aria-valuemin="0" aria-valuemax="100" [attr.aria-label]="'Progresso da importação: ' + percentualImportacao + '%'">
+        <div class="barra-progresso-preenchimento" [style.width.%]="percentualImportacao">
+        </div>
+      </div>
+
+      <div class="progresso-detalhes">
+        <span>{{ nomeArquivo }}</span>
+        <strong>{{ percentualImportacao }}%</strong>
+      </div>
+
+      <p class="texto-auxiliar">
+        Aguarde a conclusão do processamento antes de iniciar outra operação.
+      </p>
+    </section>
   }
-  
-  <button class="botao-voltar" (click)="voltar()">Voltar</button>
+
+  <section class="secao-principal">
+    <div class="secao-cabecalho">
+      <div>
+        <span class="sobretitulo">IMPORTAÇÃO DE DADOS</span>
+      </div>
+    </div>
+
+    <div class="grade-importacao">
+      <article class="cartao-importacao">
+        <div class="cartao-topo">
+          <div class="cartao-icone icone-estabelecimentos">EST</div>
+        </div>
+
+        <h3>Estabelecimentos</h3>
+        <p class="descricao">
+          Importe os municípios e os estabelecimentos de saúde no banco de dados pelo arquivo BNAFAR.
+        </p>
+
+        <div class="arquivo-selecionado">
+          <span class="arquivo-icone">CSV</span>
+          <div class="arquivo-info">
+            @if (nomeArquivoEstabelecimentos) {
+              <strong>{{ nomeArquivoEstabelecimentos }}</strong>
+              <span>Arquivo selecionado</span>
+            } 
+            @else {
+              <strong>Nenhum arquivo selecionado</strong>
+              <span>Selecione um arquivo CSV</span>
+            }
+          </div>
+        </div>
+
+        <input #arquivoEstabelecimentos type="file" accept=".csv" hidden (change)="arquivoEstabelecimentosSelecionado($event)" />
+
+        <button type="button" class="botao botao-secundario"(click)="arquivoEstabelecimentos.click()" [disabled]="importando">
+          Selecionar arquivo
+        </button>
+
+        <button type="button" class="botao botao-principal" (click)="importarEstabelecimentos()" [disabled]="importando || !arquivoEstabelecimentos">
+          Importar estabelecimentos
+        </button>
+      </article>
+
+      <article class="cartao-importacao">
+        <div class="cartao-topo">
+          <div class="cartao-icone icone-estoques">MED</div>
+        </div>
+
+        <h3>Estoques de medicamentos</h3>
+        <p class="descricao">
+          Importe todos os dados incluindo os municípios, estabelecimentos, medicamentos e estoques no banco de dados pelo arquivo BNAFAR.
+        </p>
+
+        <div class="arquivo-selecionado">
+          <span class="arquivo-icone">CSV</span>
+          <div class="arquivo-info">
+            @if (nomeArquivoEstoques) {
+              <strong>{{ nomeArquivoEstoques }}</strong>
+              <span>Arquivo selecionado</span>
+            } 
+            @else {
+              <strong>Nenhum arquivo selecionado</strong>
+              <span>Selecione um arquivo CSV</span>
+            }
+          </div>
+        </div>
+
+        <input #arquivoEstoques type="file" accept=".csv" hidden (change)="arquivoEstoquesSelecionado($event)"/>
+        <button type="button" class="botao botao-secundario" (click)="arquivoEstoques.click()" [disabled]="importando">
+          Selecionar arquivo
+        </button>
+
+        <button type="button" class="botao botao-principal" (click)="importarEstoques()" [disabled]="importando || !arquivoEstoques">
+          Importar estoques
+        </button>
+      </article>
+    </div>
+  </section>
+
+  <section class="secao-administracao">
+    <div class="secao-cabecalho">
+      <div>
+        <span class="sobretitulo">CONFIGURAÇÃO DO BANCO</span>
+      </div>
+    </div>
+
+    <div class="cartao-administracao">
+      <div class="administracao-info">
+        <h3>Estrutura do banco de dados</h3>
+      </div>
+
+      <div class="administracao-acoes">
+        <button type="button" class="botao botao-secundario" (click)="instalarBanco()">
+          Instalar banco
+        </button>
+
+        <button type="button" class="botao botao-perigo" (click)="removerBanco()">
+          Remover banco
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <button type="button" class="botao botao-voltar" (click)="voltar()">
+      ← Voltar
+    </button>
+  </footer>
 </div>

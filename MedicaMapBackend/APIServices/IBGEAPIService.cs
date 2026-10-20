@@ -14,13 +14,13 @@ namespace MedicaMap.APIServices
         public async Task<List<IBGEEstadoDTO>> ObterEstadosAsync()
         {
             var resposta = await _httpClient.GetFromJsonAsync<List<IBGEEstadoDTO>>("api/v1/localidades/estados");
-            return resposta ?? new List<IBGEEstadoDTO>();
+            return resposta.OrderBy(estado => estado.Nome) .ToList() ?? new List<IBGEEstadoDTO>();
         }
 
         public async Task<List<IBGEMunicipioDTO>> ObterMunicipiosAsync(int codigoUf)
         {
             var resposta = await _httpClient.GetFromJsonAsync<List<IBGEMunicipioDTO>>($"api/v1/localidades/estados/{codigoUf}/municipios");
-            return resposta ?? new List<IBGEMunicipioDTO>();
+            return resposta.OrderBy(municipio => municipio.Nome).ToList() ?? new List<IBGEMunicipioDTO>();
         }
     }
 }

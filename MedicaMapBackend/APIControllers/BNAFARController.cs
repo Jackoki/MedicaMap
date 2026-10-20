@@ -8,9 +8,9 @@ namespace MedicaMap.Controllers;
 [Route("api/bnafar")]
 public class BnafarController : ControllerBase
 {
-    private readonly BnafarApiService _service;
+    private readonly BnafarAPIService _service;
 
-    public BnafarController(BnafarApiService service)
+    public BnafarController(BnafarAPIService service)
     {
         _service = service;
     }

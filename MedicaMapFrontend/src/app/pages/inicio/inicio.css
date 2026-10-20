@@ -1,25 +1,275 @@
+:host {
+  display: block;
+  min-height: 100%;
+  background: #f5f7fb;
+  color: #263249;
+  font-family: inherit;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .pagina {
-  text-align: center;
-  padding: 60px 20px;
+  min-height: 100vh;
+  background: #f5f7fb;
 }
 
-h1 {
-  font-size: 40px;
-  margin-bottom: 10px;
+.cabecalho {
+  display: flex;
+  align-items: center;
+  min-height: 88px;
+  padding: 18px 6%;
+  border-bottom: 1px solid #e7ebf2;
+  background: #fff;
 }
 
-p {
-  margin-bottom: 30px;
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.marca-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #2858c5;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.marca-icone span {
+  line-height: 1;
+}
+
+.marca-texto h1 {
+  margin: 0 0 4px;
+  color: #263249;
+  font-size: 21px;
+  font-weight: 750;
+}
+
+.marca-texto > span {
+  color: #7a879b;
+  font-size: 12px;
+}
+
+.conteudo {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 64px 28px 24px;
+}
+
+.apresentacao {
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+.sobretitulo {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #2858c5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.apresentacao h2 {
+  margin: 0 0 18px;
+  color: #263249;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+}
+
+.apresentacao h2 span {
+  display: block;
+  color: #2858c5;
+}
+
+.apresentacao p {
+  max-width: 620px;
+  margin: 0;
+  color: #718096;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.secao-opcoes {
+  padding: 28px;
+  border: 1px solid #e3e8f0;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgb(25 42 70 / 3%);
+}
+
+.secao-cabecalho {
+  margin-bottom: 24px;
+}
+
+.secao-cabecalho h3 {
+  margin: 0 0 7px;
+  color: #263249;
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.secao-cabecalho p {
+  margin: 0;
+  color: #7a879b;
+  font-size: 13px;
 }
 
 .opcoes {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
 
-button {
-  padding: 15px 25px;
-  font-size: 16px;
+.card-opcao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 245px;
+  padding: 24px;
+  border: 1px solid #e3e8f0;
+  border-radius: 14px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card-opcao:hover {
+  transform: translateY(-3px);
+  border-color: #b9caee;
+  box-shadow: 0 8px 24px rgb(40 88 197 / 8%);
+}
+
+.card-opcao:focus-visible {
+  outline: 3px solid #b9ceff;
+  outline-offset: 3px;
+}
+
+.opcao-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  font-size: 29px;
+}
+
+.icone-consulta {
+  background: #eaf0ff;
+  color: #2858c5;
+}
+
+.icone-configuracao {
+  background: #e9f6f0;
+  color: #25815e;
+}
+
+.opcao-texto h4 {
+  margin: 0 0 10px;
+  color: #263249;
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.opcao-texto p {
+  margin: 0;
+  color: #7a879b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.opcao-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 24px;
+  color: #2858c5;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.seta {
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+.card-opcao:hover .seta {
+  transform: translateX(4px);
+}
+
+.rodape {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 36px;
+  padding: 20px 0;
+  border-top: 1px solid #e3e8f0;
+  color: #8994a6;
+  font-size: 11px;
+}
+
+.rodape span:first-child {
+  color: #526078;
+  font-weight: 750;
+}
+
+@media (max-width: 700px) {
+  .cabecalho {
+    min-height: 76px;
+    padding: 16px 22px;
+  }
+
+  .conteudo {
+    padding: 42px 18px 20px;
+  }
+
+  .apresentacao {
+    margin-bottom: 32px;
+  }
+
+  .apresentacao h2 {
+    letter-spacing: -0.6px;
+  }
+
+  .secao-opcoes {
+    padding: 20px;
+  }
+
+  .opcoes {
+    grid-template-columns: 1fr;
+  }
+
+  .card-opcao {
+    min-height: 225px;
+    padding: 20px;
+  }
+
+  .rodape {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
