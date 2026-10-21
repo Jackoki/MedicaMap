@@ -2,8 +2,8 @@
 
   <header class="cabecalho">
     <div class="cabecalho-texto">
-      <h1>Consulta de medicamentos</h1>
-      <p>Consulte os estoques de medicamentos por localização e estabelecimento de saúde.</p>
+      <h1>Consulta de estoque</h1>
+      <p>Consulte os estoques por localização e estabelecimento de saúde.</p>
     </div>
 
     <div class="fonte-dados">
@@ -81,10 +81,63 @@
     <div class="secao-cabecalho">
       <div>
         <span class="sobretitulo">RESULTADOS DA CONSULTA</span>
-        <h2>Estoque de medicamentos</h2>
-        <p class="estabelecimento">
-          {{ estabelecimentoSelecionado.tradeName ?? estabelecimentoSelecionado.nomeFantasia ?? estabelecimentoSelecionado.nome_fantasia ?? estabelecimentoSelecionado.nome }}
-        </p>
+        <h2>Estoque</h2>
+        <div class="estabelecimento-info">
+          <p class="estabelecimento"> {{ estabelecimentoSelecionado.tradeName ?? estabelecimentoSelecionado.nomeFantasia ?? estabelecimentoSelecionado.nome_fantasia ?? estabelecimentoSelecionado.nome }}</p>
+
+          <div class="info-container">
+            <button type="button" class="botao-info" aria-label="Informações do estabelecimento" title="Informações do estabelecimento">
+              i
+            </button>
+
+            <div class="info-popup">
+              <h3>Informações do estabelecimento</h3>
+
+              <div class="info-item">
+                <span>CNES</span>
+                <strong>
+                  {{ estabelecimentoSelecionado.cnesCode ?? estabelecimentoSelecionado.codigoCnes ?? estabelecimentoSelecionado.codigo_cnes ?? estabelecimentoSelecionado.id ?? 'Não informado' }}
+                </strong>
+              </div>
+
+              <div class="info-item">
+                <span>CEP</span>
+                <strong>
+                  {{ estabelecimentoSelecionado.cep ?? 'Não informado' }}
+                </strong>
+              </div>
+
+              <div class="info-item">
+                <span>Endereço</span>
+                <strong>
+                  {{ estabelecimentoSelecionado.street ?? estabelecimentoSelecionado.logradouro ?? 'Não informado' }},
+                  {{ estabelecimentoSelecionado.addressNumber ?? estabelecimentoSelecionado.numeroEndereco ?? estabelecimentoSelecionado.numero_endereco ?? 'S/N' }}
+                </strong>
+              </div>
+
+              <div class="info-item">
+                <span>Bairro</span>
+                <strong>
+                  {{ estabelecimentoSelecionado.neighborhood ?? estabelecimentoSelecionado.bairro ?? 'Não informado' }}
+                </strong>
+              </div>
+
+              <div class="info-item">
+                <span>Telefone</span>
+                <strong>
+                  {{ estabelecimentoSelecionado.phone ?? estabelecimentoSelecionado.telefone ?? 'Não informado' }}
+                </strong>
+              </div>
+
+              <div class="info-item">
+                <span>E-mail</span>
+                <strong>
+                  {{ estabelecimentoSelecionado.email ?? 'Não informado' }}
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <span class="contador-resultados">
@@ -105,7 +158,7 @@
       <table>
         <thead>
           <tr>
-            <th>Medicamento</th>
+            <th>Descrição</th>
             <th>Código CATMAT</th>
             <th>Quantidade</th>
             <th>Data do estoque</th>
@@ -115,7 +168,7 @@
         <tbody>
           <tr *ngFor="let estoque of estoques">
             <td class="medicamento">
-              {{ estoque.medicationDescription ?? estoque.produto ??  estoque.descricaoProduto ?? estoque.descricao }}
+              {{ estoque.medicationDescription ?? estoque.produto ?? estoque.descricaoProduto ?? estoque.descricao_produto ?? estoque.descricao ?? '—' }}
             </td>
 
             <td>
